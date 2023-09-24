@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CapsuleGrowth : MonoBehaviour
+public class Growth : MonoBehaviour
 {
     [SerializeField] private float _growthSpeed;
 
