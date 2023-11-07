@@ -41,7 +41,12 @@ public class Base : MonoBehaviour
 
     public void RemoveResources()
     {
-        _score++;
         _resources.RemoveAt(0);
+    }
+
+    public void AddScore()
+    {
+        _score++;
+        Debug.Log(_score);
     }
 }

@@ -43,6 +43,7 @@ public class Unit : MonoBehaviour
             yield return null;
         }
 
+        _base.AddScore();
         Destroy(_currentResource.gameObject);
 
         while(transform.position != _firstPosition)
