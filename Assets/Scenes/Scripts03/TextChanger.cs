@@ -8,16 +8,17 @@ using UnityEngine.UI;
 public class TextChanger : MonoBehaviour
 {
     private Text _text;
+    private int _animationTime = 2;
 
-    void Start()
+    private void Start()
     {
         _text = GetComponent<Text>();
 
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(_text.DOText("я заменил текст", 2));
-        sequence.Append(_text.DOText(", добавим текст", 2).SetRelative());
-        sequence.Append(_text.DOText("Ёффект замены с перебором", 2, true, ScrambleMode.All));
+        sequence.Append(_text.DOText("я заменил текст", _animationTime));
+        sequence.Append(_text.DOText(", добавим текст", _animationTime).SetRelative());
+        sequence.Append(_text.DOText("Ёффект замены с перебором", _animationTime, true, ScrambleMode.All));
 
         sequence.SetLoops(-1, LoopType.Restart);
     }

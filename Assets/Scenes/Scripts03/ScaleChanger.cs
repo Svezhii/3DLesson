@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class ScaleChanger : MonoBehaviour
 {
-    void Start()
+    private int _animationTime = 2;
+    private int _targetScale = 2;
+
+    private void Start()
     {
-        transform.DOScale(new Vector3(2, 2, 2), 5).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+        transform.DOScale(new Vector3(_targetScale, _targetScale, _targetScale), _animationTime).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
     }
 }

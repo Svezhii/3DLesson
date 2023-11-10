@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class RotateChanger : MonoBehaviour
 {
-    void Start()
+    private int _animationTime = 5;
+
+    private int _targertXRotation = 45;
+    private int _targertYRotation = 70;
+    private int _targertZRotation = 90;
+
+    private void Start()
     {
-        transform.DORotate(new Vector3(45, 70, 90), 5).SetLoops(-1, LoopType.Restart);
+        transform.DORotate(new Vector3(_targertXRotation, _targertYRotation, _targertZRotation), _animationTime).SetLoops(-1, LoopType.Restart);
     }
 }

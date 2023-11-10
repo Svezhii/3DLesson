@@ -7,11 +7,12 @@ using UnityEngine;
 public class ColorChanger : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
+    private int _animationTime = 2;
 
-    void Start()
+    private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        _spriteRenderer.DOColor(Color.red, 2).SetLoops(-1, LoopType.Yoyo);
+        _spriteRenderer.DOColor(Color.red, _animationTime).SetLoops(-1, LoopType.Yoyo);
     }
 }
