@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class Unit : MonoBehaviour
 
         _currentResource.transform.parent = transform;
 
-        while(_isEnterBase == false)
+        while (_isEnterBase == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, _base.transform.position, _speed * Time.deltaTime);
 
@@ -46,7 +47,7 @@ public class Unit : MonoBehaviour
         _base.AddScore();
         Destroy(_currentResource.gameObject);
 
-        while(transform.position != _firstPosition)
+        while (transform.position != _firstPosition)
         {
             transform.position = Vector3.MoveTowards(transform.position, _firstPosition, _speed * Time.deltaTime);
 

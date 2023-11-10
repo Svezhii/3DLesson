@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Base : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Base : MonoBehaviour
     {
         FindResources(transform.position, _radius);
 
-        foreach(var unit in _units)
+        foreach (var unit in _units)
         {
             if (_resources.Count > 0 && unit.IsReady)
             {
@@ -32,7 +33,7 @@ public class Base : MonoBehaviour
 
         foreach (var hitCollider in hitColliders)
         {
-            if(hitCollider.TryGetComponent<Resource>(out Resource resource) && !_resources.Contains(resource) && resource.IsTaken == false)
+            if (hitCollider.TryGetComponent<Resource>(out Resource resource) && !_resources.Contains(resource) && resource.IsTaken == false)
             {
                 _resources.Add(resource);
             }
