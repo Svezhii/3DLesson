@@ -517,7 +517,7 @@ PrefabInstance:
       objectReference: {fileID: 258451581}
     - target: {fileID: 7037491526790697517, guid: e3df6c53e80d6c1409ca987bf5673497, type: 3}
       propertyPath: m_Name
-      value: Sphere (2)
+      value: Unit03
       objectReference: {fileID: 0}
     - target: {fileID: 8704780815796373351, guid: e3df6c53e80d6c1409ca987bf5673497, type: 3}
       propertyPath: m_LocalPosition.x
@@ -582,7 +582,7 @@ PrefabInstance:
       objectReference: {fileID: 258451581}
     - target: {fileID: 7037491526790697517, guid: e3df6c53e80d6c1409ca987bf5673497, type: 3}
       propertyPath: m_Name
-      value: Sphere (1)
+      value: Unit02
       objectReference: {fileID: 0}
     - target: {fileID: 8704780815796373351, guid: e3df6c53e80d6c1409ca987bf5673497, type: 3}
       propertyPath: m_LocalPosition.x
@@ -763,7 +763,11 @@ PrefabInstance:
       objectReference: {fileID: 258451581}
     - target: {fileID: 7037491526790697517, guid: e3df6c53e80d6c1409ca987bf5673497, type: 3}
       propertyPath: m_Name
-      value: Sphere
+      value: Unit01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692959395864881210, guid: e3df6c53e80d6c1409ca987bf5673497, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8704780815796373351, guid: e3df6c53e80d6c1409ca987bf5673497, type: 3}
       propertyPath: m_LocalPosition.x
@@ -921,6 +925,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 608168667991406321, guid: 973d0da0e3739a44995e783c8e9e6e39, type: 3}
+      propertyPath: _units.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 608168667991406321, guid: 973d0da0e3739a44995e783c8e9e6e39, type: 3}
       propertyPath: _units.Array.data[0]
       value: 
       objectReference: {fileID: 1789123764}
@@ -934,7 +942,7 @@ PrefabInstance:
       objectReference: {fileID: 915664307}
     - target: {fileID: 2096675583418031796, guid: 973d0da0e3739a44995e783c8e9e6e39, type: 3}
       propertyPath: m_Name
-      value: Cylinder
+      value: Base
       objectReference: {fileID: 0}
     - target: {fileID: 3440755310139496698, guid: 973d0da0e3739a44995e783c8e9e6e39, type: 3}
       propertyPath: _borders

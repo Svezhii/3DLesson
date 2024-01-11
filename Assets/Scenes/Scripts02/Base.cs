@@ -3,21 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(BaseFlagManager))]
 public class Base : MonoBehaviour
 {
     [SerializeField] private float _radius;
-    [SerializeField] private Unit[] _units;
+    [SerializeField] private List<Unit> _units;
+    [SerializeField] private float _radarInterval;
 
-    private int _score = 0;
+    private BaseFlagManager _baseFlagManager;
     private List<Resource> _resources = new List<Resource>();
+    public event UnityAction ScoreChange;
+    public int Score { get; private set; } = 0;
+
+    private void Awake()
+    {
+        _baseFlagManager = GetComponent<BaseFlagManager>();
+    }
 
     private void Update()
     {
-        FindResources(transform.position, _radius);
+        StartCoroutine(FindResources(transform.position, _radius));
+
+        Debug.Log(_units.Count);
 
         foreach (var unit in _units)
         {
-            if (_resources.Count > 0 && unit.IsReady)
+            if(Score > 4 && unit.IsReady && _baseFlagManager)
+            {
+                Score -= 5;
+                unit.GoToFlag(_baseFlagManager.Flag);
+                unit.IsReady = false;
+                _units.Remove(unit);
+                _baseFlagManager.SwitchFlag();
+                break;
+            }
+            else if (_resources.Count > 0 && unit.IsReady)
             {
                 unit.GoToResource(_resources[0]);
                 _resources[0].IsTaken = true;
@@ -27,16 +47,23 @@ public class Base : MonoBehaviour
         }
     }
 
-    private void FindResources(Vector3 center, float radius)
+    private IEnumerator FindResources(Vector3 center, float radius)
     {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        var waitForSecond = new WaitForSeconds(_radarInterval);
 
-        foreach (var hitCollider in hitColliders)
+        while (enabled)
         {
-            if (hitCollider.TryGetComponent<Resource>(out Resource resource) && !_resources.Contains(resource) && resource.IsTaken == false)
+            foreach (var hitCollider in hitColliders)
             {
-                _resources.Add(resource);
+                if (hitCollider.TryGetComponent<Resource>(out Resource resource) && !_resources.Contains(resource) && resource.IsTaken == false && resource.IsRadaring == false)
+                {
+                    resource.IsRadaring = true;
+                    _resources.Add(resource);
+                }
             }
+
+            yield return waitForSecond;
         }
     }
 
@@ -47,7 +74,19 @@ public class Base : MonoBehaviour
 
     public void AddScore()
     {
-        _score++;
-        Debug.Log(_score);
+        Score++;
+        ScoreChange?.Invoke();
+    }
+
+    public void AddUnit(Unit unit)
+    {
+        _units.Add(unit);
+        Score -= 3;
+    }
+
+    public void NewBase(Unit unit)
+    {
+        _units.Add(unit);
+        Score = 0;
     }
 }

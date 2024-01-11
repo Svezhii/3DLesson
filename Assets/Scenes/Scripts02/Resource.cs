@@ -7,4 +7,5 @@ using UnityEngine.Events;
 public class Resource : MonoBehaviour
 {
     public bool IsTaken = false;
+    public bool IsRadaring = false;
 }

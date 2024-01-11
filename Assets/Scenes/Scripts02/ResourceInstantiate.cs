@@ -11,7 +11,7 @@ public class ResourceInstantiate : MonoBehaviour
 {
     [SerializeField] private Resource _resourcePrefab;
     [SerializeField] private float _spawnInterval;
-    [SerializeField]  private Borders _borders;
+    [SerializeField] private Borders _borders;
 
     private Vector3 _planeMinBounds;
     private Vector3 _planeMaxBounds;
@@ -36,7 +36,7 @@ public class ResourceInstantiate : MonoBehaviour
     {
         var waitForSecond = new WaitForSeconds(_spawnInterval);
 
-        while(enabled)
+        while (enabled)
         {
             Vector3 randomPosition = GetRandomPosition();
 

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,12 +9,16 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Base _base;
+    [SerializeField] private Base _basePrefab;
 
     private Vector3 _firstPosition;
     public bool IsReady = true;
     private bool _isEnterResource = false;
+    private bool _isEnterFlag = false;
     private bool _isEnterBase = false;
     private Resource _currentResource;
+    private Flag _currentFlag;
+    private float positionThreshold = 0.9f;
 
     private void Start()
     {
@@ -23,10 +29,39 @@ public class Unit : MonoBehaviour
     {
         _currentResource = resource;
 
-        StartCoroutine(MoveToTarget(_currentResource.transform.position));
+        StartCoroutine(MoveToResource(resource.transform.position));
     }
 
-    private IEnumerator MoveToTarget(Vector3 targetPosition)
+    public void GoToFlag(Flag flag)
+    {
+        _currentFlag = flag;
+
+        StartCoroutine(MoveToFlag(flag.transform.position));
+    }
+
+    public void SetBase(Base based)
+    {
+        _base = based;
+    }
+
+    private IEnumerator MoveToFlag(Vector3 targetPosition)
+    {
+        while (_isEnterFlag == false)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+
+            yield return null;
+        }
+
+        _base = Instantiate(_basePrefab, targetPosition, Quaternion.identity);
+        _base.NewBase(this);
+        _firstPosition = targetPosition;
+        IsReady = true;
+        _isEnterFlag = false;
+        Destroy(_currentFlag.gameObject);
+    }
+
+    private IEnumerator MoveToResource(Vector3 targetPosition)
     {
         while (_isEnterResource == false)
         {
@@ -35,6 +70,7 @@ public class Unit : MonoBehaviour
             yield return null;
         }
 
+        _isEnterBase = false;
         _currentResource.transform.parent = transform;
 
         while (_isEnterBase == false)
@@ -47,7 +83,7 @@ public class Unit : MonoBehaviour
         _base.AddScore();
         Destroy(_currentResource.gameObject);
 
-        while (transform.position != _firstPosition)
+        while (Vector3.Distance(transform.position, _firstPosition) > positionThreshold)
         {
             transform.position = Vector3.MoveTowards(transform.position, _firstPosition, _speed * Time.deltaTime);
 
@@ -66,6 +102,11 @@ public class Unit : MonoBehaviour
         if (otherResource != null && otherResource == _currentResource)
         {
             _isEnterResource = true;
+        }
+
+        if (collision.GetComponent<Flag>())
+        {
+            _isEnterFlag = true;
         }
 
         if (collision.GetComponent<Base>())
