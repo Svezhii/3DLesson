@@ -12,6 +12,8 @@ public class Base : MonoBehaviour
 
     private BaseFlagManager _baseFlagManager;
     private List<Resource> _resources = new List<Resource>();
+    private int _priceUnit = 3;
+    private int _priceNewBase = 5;
     public event UnityAction ScoreChange;
     public int Score { get; private set; } = 0;
 
@@ -28,11 +30,10 @@ public class Base : MonoBehaviour
 
         foreach (var unit in _units)
         {
-            if(Score > 4 && unit.IsReady && _baseFlagManager)
+            if(Score >= _priceNewBase && unit.IsReady && _baseFlagManager)
             {
-                Score -= 5;
+                Score -= _priceNewBase;
                 unit.GoToFlag(_baseFlagManager.Flag);
-                unit.IsReady = false;
                 _units.Remove(unit);
                 _baseFlagManager.SwitchFlag();
                 break;
@@ -42,7 +43,6 @@ public class Base : MonoBehaviour
                 unit.GoToResource(_resources[0]);
                 _resources[0].IsTaken = true;
                 RemoveResources();
-                unit.IsReady = false;
             }
         }
     }
@@ -81,7 +81,7 @@ public class Base : MonoBehaviour
     public void AddUnit(Unit unit)
     {
         _units.Add(unit);
-        Score -= 3;
+        Score -= _priceUnit;
     }
 
     public void NewBase(Unit unit)

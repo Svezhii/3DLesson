@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Base))]
 public class BaseFlagManager : MonoBehaviour
 {
     [SerializeField] private Flag _flagPrefab;

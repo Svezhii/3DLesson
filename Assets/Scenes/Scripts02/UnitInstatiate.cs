@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Base))]
+[RequireComponent(typeof(BaseFlagManager))]
 public class UnitInstatiate : MonoBehaviour
 {
     [SerializeField] private Unit _prefab;

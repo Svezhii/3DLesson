@@ -12,13 +12,13 @@ public class Unit : MonoBehaviour
     [SerializeField] private Base _basePrefab;
 
     private Vector3 _firstPosition;
-    public bool IsReady = true;
     private bool _isEnterResource = false;
     private bool _isEnterFlag = false;
     private bool _isEnterBase = false;
     private Resource _currentResource;
     private Flag _currentFlag;
     private float positionThreshold = 0.9f;
+    public bool IsReady { get; private set; } = true;
 
     private void Start()
     {
@@ -28,6 +28,7 @@ public class Unit : MonoBehaviour
     public void GoToResource(Resource resource)
     {
         _currentResource = resource;
+        IsReady = false;
 
         StartCoroutine(MoveToResource(resource.transform.position));
     }
@@ -35,6 +36,7 @@ public class Unit : MonoBehaviour
     public void GoToFlag(Flag flag)
     {
         _currentFlag = flag;
+        IsReady = false;
 
         StartCoroutine(MoveToFlag(flag.transform.position));
     }
