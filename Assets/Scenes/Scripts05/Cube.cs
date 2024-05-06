@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
+    [SerializeField] private float _explosionForce;
+    [SerializeField] private float _explosionRadius;
+
     private Rigidbody _rigidbody;
 
     private int _decreaseSpawnChance = 2;
@@ -21,7 +24,7 @@ public class Cube : MonoBehaviour
     public void Init(float decreaseScale)
     {
         transform.localScale = new Vector3(transform.localScale.x * decreaseScale, transform.localScale.y * decreaseScale, transform.localScale.z * decreaseScale);
-        _rigidbody.AddExplosionForce(200, transform.position, 100);
+        _rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
         SpawnChance /= _decreaseSpawnChance;
     }
 }
