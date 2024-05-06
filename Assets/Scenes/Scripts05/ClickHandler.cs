@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeGenerator : MonoBehaviour
+public class ClickHandler : MonoBehaviour
 {
     private void Update()
     {
@@ -12,7 +12,7 @@ public class CubeGenerator : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
-            if (hit.collider.TryGetComponent<Cube>(out Cube cube))
+            if (hit.collider.TryGetComponent<CubeSpawner>(out CubeSpawner cube))
             {
                 cube.GenerateCubes();
                 Destroy(cube.gameObject);

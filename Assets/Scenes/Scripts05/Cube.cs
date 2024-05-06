@@ -2,41 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private Cube _cubePrefab;
+    private Rigidbody _rigidbody;
 
-    private float _minScale = 0.5f;
-    private int _spawnChance = 100;
     private int _decreaseSpawnChance = 2;
+    public int SpawnChance { get; private set; } = 100;
 
-    private int _minSpawnCubes = 2;
-    private int _maxSpawnCubes = 7;
-
-    private float _minChance = 0;
-    private float _maxChance = 101;
-
-    public void GenerateCubes()
+    private void Awake()
     {
-        int numCubes = Random.Range(_minSpawnCubes, _maxSpawnCubes);
+        _rigidbody = GetComponent<Rigidbody>();
 
-        for (int i = 0; i < numCubes; i++)
-        {
-            if (Random.Range(_minChance, _maxChance) < _spawnChance)
-            {
-                Cube cube = Instantiate(_cubePrefab, transform.position, Quaternion.identity);
-
-                cube.transform.localScale = new Vector3(transform.localScale.x * _minScale, transform.localScale.y * _minScale, transform.localScale.z * _minScale);
-
-                cube.GetComponent<Renderer>().material.color = Random.ColorHSV();
-
-                cube.DecreaseChance(_spawnChance / _decreaseSpawnChance);
-            }
-        }
+        GetComponent<Renderer>().material.color = Random.ColorHSV();
     }
 
-    public void DecreaseChance(int newSpawnChance)
+    public void Init(float decreaseScale)
     {
-        _spawnChance = newSpawnChance;
+        transform.localScale = new Vector3(transform.localScale.x * decreaseScale, transform.localScale.y * decreaseScale, transform.localScale.z * decreaseScale);
+        _rigidbody.AddExplosionForce(200, transform.position, 100);
+        SpawnChance /= _decreaseSpawnChance;
     }
 }
