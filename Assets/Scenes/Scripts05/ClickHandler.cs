@@ -12,10 +12,10 @@ public class ClickHandler : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
-            if (hit.collider.TryGetComponent<CubeSpawner>(out CubeSpawner cube))
+            if (hit.collider.TryGetComponent<CubeSpawner>(out CubeSpawner cubeSpawner))
             {
-                cube.GenerateCubes();
-                Destroy(cube.gameObject);
+                cubeSpawner.GenerateCubes();
+                Destroy(cubeSpawner.gameObject);
             }
         }
     }

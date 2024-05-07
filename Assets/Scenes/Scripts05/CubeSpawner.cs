@@ -8,6 +8,7 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private Cube _cubePrefab;
 
     private Cube _cube;
+    private Explosion _explosion;
 
     private float _minScale = 0.5f;
 
@@ -20,6 +21,7 @@ public class CubeSpawner : MonoBehaviour
     private void Awake()
     {
         _cube = GetComponent<Cube>();
+        _explosion = GetComponent<Explosion>();
     }
 
     public void GenerateCubes()
@@ -32,8 +34,12 @@ public class CubeSpawner : MonoBehaviour
             {
                 Cube cube = Instantiate(_cubePrefab, transform.position, Quaternion.identity);
 
-                cube.Init(_minScale); 
+                cube.Init(_minScale, _cube.SpawnChance); 
             }
+        }
+        else
+        {
+            _explosion.Explode(transform.localScale.x);
         }
     }
 }

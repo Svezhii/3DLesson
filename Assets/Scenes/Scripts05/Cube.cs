@@ -21,10 +21,10 @@ public class Cube : MonoBehaviour
         GetComponent<Renderer>().material.color = Random.ColorHSV();
     }
 
-    public void Init(float decreaseScale)
+    public void Init(float decreaseScale, int newSpawnChance)
     {
         transform.localScale = new Vector3(transform.localScale.x * decreaseScale, transform.localScale.y * decreaseScale, transform.localScale.z * decreaseScale);
         _rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
-        SpawnChance /= _decreaseSpawnChance;
+        SpawnChance = newSpawnChance / _decreaseSpawnChance;
     }
 }
