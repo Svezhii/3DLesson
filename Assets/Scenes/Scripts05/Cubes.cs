@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
-public class Cube : MonoBehaviour
+public class Cubes : MonoBehaviour
 {
     [SerializeField] private float _explosionForce;
     [SerializeField] private float _explosionRadius;
