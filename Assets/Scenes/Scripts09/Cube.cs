@@ -11,7 +11,7 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.TryGetComponent<CubeInstantiate>(out CubeInstantiate cubeInstantiate) && _hasCollided)
+        if(collision.collider.TryGetComponent<CubeInstantiator>(out CubeInstantiator cubeInstantiate) && _hasCollided)
         {
             _hasCollided = false;
             GetComponent<Renderer>().material.color = Random.ColorHSV();

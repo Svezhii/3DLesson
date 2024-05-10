@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeInstantiate : MonoBehaviour
+public class CubeInstantiator : MonoBehaviour
 {
     [SerializeField] private Cube _cube;
     [SerializeField] private float _spawnInterval;
