@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerHandler))]
-public class PlayerCharacterController : MonoBehaviour
+public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
@@ -26,7 +26,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         if (_characterController != null)
         {
-            Vector3 playerSpeed = new Vector3(_playerHandler.Horizontal, 0, _playerHandler.Vertical);
+            Vector3 playerSpeed = new Vector3(_playerHandler.HorizontalMove, 0, _playerHandler.VerticalMove);
             playerSpeed *= Time.deltaTime * _speed;
 
             if (_characterController.isGrounded)

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Persecutor : MonoBehaviour
 {
-    [SerializeField] PlayerCharacterController _playerCC;
+    [SerializeField] PlayerMover _playerCC;
     [SerializeField] private float _speed;
     [SerializeField] private float stoppingDistance = 1f;
 
@@ -20,10 +20,10 @@ public class Persecutor : MonoBehaviour
 
     private void Update()
     {
-        Pursuit();
+        Chase();
     }
 
-    private void Pursuit()
+    private void Chase()
     {
         Vector3 direction = (_playerCC.transform.position - _transform.position).normalized;
         float distanceToPlayer = Vector3.Distance(_transform.position, _playerCC.transform.position);
@@ -36,7 +36,5 @@ public class Persecutor : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
         }
-
-
     }
 }

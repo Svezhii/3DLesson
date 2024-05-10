@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
-    public float Vertical { get; private set; }
-    public float Horizontal { get; private set; }
+    public const string Vertical = nameof(Vertical);
+    public const string Horizontal = nameof(Horizontal);
+
+    public float VerticalMove { get; private set; }
+    public float HorizontalMove { get; private set; }
 
     private void Update()
     {
-        Vertical = Input.GetAxis("Vertical");
-        Horizontal = Input.GetAxis("Horizontal");
+        VerticalMove = Input.GetAxis(Vertical);
+        HorizontalMove = Input.GetAxis(Horizontal);
     }
 }
