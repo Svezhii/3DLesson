@@ -23,7 +23,7 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.TryGetComponent<CubeSpawner>(out CubeSpawner _) && _hasCollided)
+        if (collision.collider.TryGetComponent<Plane>(out Plane _) && _hasCollided)
         {
             _hasCollided = false;
             GetComponent<Renderer>().material.color = Random.ColorHSV();
