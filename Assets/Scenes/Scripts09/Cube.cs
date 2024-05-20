@@ -5,19 +5,20 @@ using UnityEngine.Pool;
 [RequireComponent(typeof(Renderer))]
 public class Cube : MonoBehaviour
 {
+    private Renderer _renderer;
     private IObjectPool<Cube> _pool;
     private bool _hasCollided = true;
     private int _minLifeTime = 2;
     private int _maxLifeTime = 6;
 
-    public void SetPool(IObjectPool<Cube> pool)
+    private void Awake()
     {
-        _pool = pool;
+        _renderer = GetComponent<Renderer>();
     }
 
     private void OnEnable()
     {
-        GetComponent<Renderer>().material.color = Color.white;
+        _renderer.material.color = Color.white;
         _hasCollided = true;
     }
 
@@ -26,12 +27,17 @@ public class Cube : MonoBehaviour
         if (collision.collider.TryGetComponent<Plane>(out Plane _) && _hasCollided)
         {
             _hasCollided = false;
-            GetComponent<Renderer>().material.color = Random.ColorHSV();
-            StartCoroutine(DestroyCube());
+            _renderer.material.color = Random.ColorHSV();
+            StartCoroutine(Destroy());
         }
     }
 
-    private IEnumerator DestroyCube()
+    public void SetPool(IObjectPool<Cube> pool)
+    {
+        _pool = pool;
+    }
+
+    private IEnumerator Destroy()
     {
         int lifeTime = Random.Range(_minLifeTime, _maxLifeTime);
         yield return new WaitForSeconds(lifeTime);

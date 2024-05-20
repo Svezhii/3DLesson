@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
+[RequireComponent(typeof(MeshFilter))]
 public class CubeSpawner : MonoBehaviour
 {
     [SerializeField] private Cube _cube;
@@ -10,6 +11,7 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private int _poolCapacity;
     [SerializeField] private int _poolMaxSize;
 
+    private MeshFilter _meshFilter;
     private Transform _transform;
     private Vector3 _planeMinBounds;
     private Vector3 _planeMaxBounds;
@@ -19,7 +21,8 @@ public class CubeSpawner : MonoBehaviour
 
     private void Awake()
     {
-        _pool = new ObjectPool<Cube>(CreatePooledItem, ActionOnGet, ActionOnRelease, ActionOnDestroy, defaultCapacity: _poolCapacity, maxSize: _poolMaxSize);
+        _meshFilter = GetComponent<MeshFilter>();
+        _pool = new ObjectPool<Cube>(CreatePooledItem, TakeFromPool, ReturnedToPool, DestroyPoolObject, defaultCapacity: _poolCapacity, maxSize: _poolMaxSize);
 
         _transform = transform;
     }
@@ -58,7 +61,7 @@ public class CubeSpawner : MonoBehaviour
 
     private void CalculatePlaneBounds()
     {
-        Mesh planeMesh = GetComponent<MeshFilter>().sharedMesh;
+        Mesh planeMesh = _meshFilter.sharedMesh;
         Bounds planeBounds = planeMesh.bounds;
 
         _planeMinBounds = _transform.position + _transform.rotation * planeBounds.min;
@@ -72,7 +75,7 @@ public class CubeSpawner : MonoBehaviour
         return cube;
     }
 
-    private void ActionOnGet(Cube cube)
+    private void TakeFromPool(Cube cube)
     {
         Vector3 randomPosition = GetRandomPosition();
 
@@ -81,12 +84,12 @@ public class CubeSpawner : MonoBehaviour
         cube.gameObject.SetActive(true);
     }
 
-    private void ActionOnRelease(Cube cube)
+    private void ReturnedToPool(Cube cube)
     {
         cube.gameObject.SetActive(false);
     }
 
-    private void ActionOnDestroy(Cube cube)
+    private void DestroyPoolObject(Cube cube)
     {
         Destroy(cube.gameObject);
     }
