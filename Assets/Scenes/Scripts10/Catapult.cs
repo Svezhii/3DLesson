@@ -9,8 +9,10 @@ public class Catapult : MonoBehaviour
 
     private float _firstPosition = 2;
     private float _secondPosition = -10;
-
     private SpringJoint _springJoint;
+    private KeyCode _spawnProjectle = KeyCode.Space;
+    private KeyCode _launch = KeyCode.W;
+    private KeyCode _return = KeyCode.S;
 
     private void Awake()
     {
@@ -19,28 +21,26 @@ public class Catapult : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(_launch))
         {
-            Vector3 currentAnchor = _springJoint.anchor;
-
-            currentAnchor.y = _secondPosition;
-
-            _springJoint.anchor = currentAnchor;
-        }
-        
-        if(Input.GetKeyUp(KeyCode.S))
-        {
-            Vector3 currentAnchor = _springJoint.anchor;
-
-            currentAnchor.y = _firstPosition;
-
-            _springJoint.anchor = currentAnchor;
-
+            UpdateAnchorPosition(_secondPosition);
         }
 
-        if(Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(_return))
+        {
+            UpdateAnchorPosition(_firstPosition);
+        }
+
+        if (Input.GetKeyUp(_spawnProjectle))
         {
             Instantiate(_projectile);
         }
+    }
+
+    private void UpdateAnchorPosition(float newPosition)
+    {
+        Vector3 currentAnchor = _springJoint.anchor;
+        currentAnchor.y = newPosition;
+        _springJoint.anchor = currentAnchor;
     }
 }
